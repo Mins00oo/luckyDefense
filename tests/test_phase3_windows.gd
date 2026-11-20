@@ -12,6 +12,7 @@ func run() -> void:
 	# Explicit dense rendering fixture, not a balance result: long-lived enemies
 	# keep 59 bodies active while all 24 towers exercise the real targeting loop.
 	s.gold = 1200
+	s.rng.seed = 239
 	for slot in 24:
 		s.summon(slot)
 	for index in 59:
@@ -39,11 +40,11 @@ func run() -> void:
 		physics_total += cost
 		frames += 1
 	await RenderingServer.frame_post_draw
-	var saved: Error = root.get_texture().get_image().save_png("res://docs/phase3-pressure.png")
+	var saved: Error = root.get_texture().get_image().save_png("res://docs/phase4-pressure.png")
 	var ok: bool = saved == OK and s.enemies.size() == 59 and s.towers.size() == 24 and s.state == s.State.COMBAT
 	frame_times.sort()
 	var metrics: Dictionary = {"warmup_seconds": 2, "sample_frames": frames, "physics_mean_ms": physics_total / maxf(frames, 1), "physics_max_ms": physics_max, "frame_p95_ms": frame_times[int(frames * 0.95)], "active_enemies": s.enemies.size(), "towers": s.towers.size(), "effects": game.get_node("Effects").flashes.size()}
-	var file := FileAccess.open("res://docs/phase3-performance.json", FileAccess.WRITE)
+	var file := FileAccess.open("res://docs/phase4-performance.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(metrics, "\t"))
 	file.close()
 	print("WINDOWS DENSE FIXTURE: ", JSON.stringify(metrics))

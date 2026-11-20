@@ -22,12 +22,15 @@ func run() -> void:
 	var session = game.get_node("Session")
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 771
-	var counts: Dictionary = {"rapid": 0, "artillery": 0, "pierce": 0}
+	var counts: Dictionary = {}
+	var total_weight: float = 0.0
+	for data in session.catalog.units:
+		counts[data.id] = 0
+		total_weight += data.weight
 	for index in 10000:
 		counts[session.catalog.roll(rng).id] += 1
-	check(absf(counts.rapid / 10000.0 - 0.55) < 0.025, "Rapid weight distribution")
-	check(absf(counts.artillery / 10000.0 - 0.30) < 0.025, "Artillery weight distribution")
-	check(absf(counts.pierce / 10000.0 - 0.15) < 0.025, "Pierce weight distribution")
+	for data in session.catalog.units:
+		check(absf(counts[data.id] / 10000.0 - data.weight / total_weight) < 0.025, "Type distribution " + data.id)
 	var empty_catalog := UnitCatalog.new()
 	check(empty_catalog.roll(rng) == null, "Empty catalog must be safe")
 	check(session.state == session.State.PREPARATION, "Must start in preparation")
@@ -57,6 +60,8 @@ func run() -> void:
 	session.toggle_pause()
 	# Exercise each attack against a controlled formation without frame progression.
 	for definition in session.catalog.units:
+		if definition.attack_kind > 2:
+			continue # Additional attack types are covered by test_phase4.gd.
 		for old in session.enemies.duplicate():
 			old.take_damage(99999.0)
 		var a = session.spawn_enemy()

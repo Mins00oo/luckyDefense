@@ -1,0 +1,30 @@
+{
+	"failures": 0,
+	"measurements": [
+		{
+			"actual_shots_per_second": 6.66666666666667,
+			"expected_shots_per_second": 6.66666666666667,
+			"grade": "COMMON"
+		},
+		{
+			"actual_shots_per_second": 6.88333333333333,
+			"expected_shots_per_second": 6.87285223367698,
+			"grade": "UNCOMMON"
+		},
+		{
+			"actual_shots_per_second": 7.1,
+			"expected_shots_per_second": 7.09219858156028,
+			"grade": "RARE"
+		},
+		{
+			"actual_shots_per_second": 7.41666666666667,
+			"expected_shots_per_second": 7.40740740740741,
+			"grade": "EPIC"
+		},
+		{
+			"actual_shots_per_second": 7.76666666666667,
+			"expected_shots_per_second": 7.75193798449612,
+			"grade": "LEGENDARY"
+		}
+	]
+}

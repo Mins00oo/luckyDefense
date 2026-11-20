@@ -1,18 +1,27 @@
-[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3 uid="uid://0gp6p6d5vaem"]
 
-[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="Script" uid="uid://w48eymbvgbfr" path="res://scripts/data/unit_definition.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = "rapid"
 display_name = "벌컨 / VULCAN"
-grade = "STANDARD"
-description = "연사형 · 단일 표적을 빠르게 제압"
-weight = 55.0
+category = "기계형"
+description = "초고속 단일 연사. 중장갑에 취약."
+weight = 20.0
 attack_kind = 0
-damage = 9.0
-attack_interval = 0.22
+damage = 6.0
+attack_interval = 0.15
 attack_range = 330.0
-accent = Color(0.64, 0.76, 0.60, 1)
+splash_radius = 70.0
+beam_width = 16.0
+armor_penetration = 0.0
+burn_dps = 12.0
+burn_duration = 1.2
+cone_half_angle = 0.65
+max_targets = 5
+slow_strength = 0.25
+slow_duration = 1.5
+accent = Color(0.64, 0.76, 0.6, 1)
 visual_scene = ExtResource("2")

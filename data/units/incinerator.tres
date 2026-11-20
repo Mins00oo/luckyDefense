@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+id = "incinerator"
+display_name = "화염병 / INCINERATOR"
+category = "보병형"
+description = "원뿔 화염: 초당 12 연소. 최대 5대상."
+weight = 10.0
+attack_kind = 4
+damage = 2.0
+attack_interval = 0.45
+attack_range = 240.0
+splash_radius = 70.0
+beam_width = 16.0
+armor_penetration = 0.0
+accent = Color(0.90,0.43,0.20,1)
+visual_scene = ExtResource("2")

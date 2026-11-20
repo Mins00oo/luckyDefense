@@ -47,6 +47,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		background_clicked.emit()
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		for tower: Tower in occupied.values():
+			if tower.visual.has_method("contains_pointer"):
+				var pointer: Vector2 = tower.visual.get_global_transform_with_canvas().affine_inverse() * event.position
+				if tower.visual.contains_pointer(pointer):
+					slot_selected.emit(tower.slot)
+					return
 		var local: Vector2 = get_global_transform_with_canvas().affine_inverse() * event.position - GRID_ORIGIN
 		if Rect2(Vector2.ZERO, CELL * Vector2(COLUMNS, ROWS)).has_point(local):
 			slot_selected.emit(int(local.y / CELL.y) * COLUMNS + int(local.x / CELL.x))

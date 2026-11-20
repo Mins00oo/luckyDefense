@@ -43,7 +43,7 @@ func run() -> void:
 	var b = s.towers[1]
 	a.cooldown = 0.4
 	s.handle_slot(0)
-	check(s.selected_tower == a and a.selected and board.selected_range == a.definition.attack_range, "Select outline and range")
+	check(s.selected_tower == a and a.selected and board.selected_range == a.reach(), "Select outline and range")
 	s.handle_slot(12)
 	check(a.slot == 12 and a.position == board.slot_position(12) and not board.occupied.has(0), "Move to empty slot")
 	check(a.cooldown == 0.4 and s.gold == 0, "Move is free and preserves cooldown")

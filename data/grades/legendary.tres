@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitGrade" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_grade.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = "LEGENDARY"
+display_name = "전설"
+rank = 4
+weight = 50
+color = Color(0.91,0.73,0.34,1)
+damage_multiplier = 2.1
+interval_multiplier = 0.86
+range_multiplier = 1.14
+special_multiplier = 1.55
+armor_penetration = 2.0
+extra_targets = 3

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/assault_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+id = "assault"
+display_name = "돌격병 / ASSAULT"
+category = "보병형"
+description = "빠른 단일 사격. 수적 화력 지원."
+weight = 20.0
+attack_kind = 6
+damage = 9.0
+attack_interval = 0.26
+attack_range = 330.0
+splash_radius = 70.0
+beam_width = 16.0
+armor_penetration = 0.0
+accent = Color(0.64,0.70,0.59,1)
+visual_scene = ExtResource("2")

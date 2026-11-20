@@ -1,0 +1,43 @@
+{
+  "source": "source_assault_sheet.png",
+  "frames_per_action": 6,
+  "frame_size": [
+    128,
+    128
+  ],
+  "actions": {
+    "idle": [
+      "frames_128/idle_00.png",
+      "frames_128/idle_01.png",
+      "frames_128/idle_02.png",
+      "frames_128/idle_03.png",
+      "frames_128/idle_04.png",
+      "frames_128/idle_05.png"
+    ],
+    "walk": [
+      "frames_128/walk_00.png",
+      "frames_128/walk_01.png",
+      "frames_128/walk_02.png",
+      "frames_128/walk_03.png",
+      "frames_128/walk_04.png",
+      "frames_128/walk_05.png"
+    ],
+    "attack": [
+      "frames_128/attack_00.png",
+      "frames_128/attack_01.png",
+      "frames_128/attack_02.png",
+      "frames_128/attack_03.png",
+      "frames_128/attack_04.png",
+      "frames_128/attack_05.png"
+    ],
+    "hit": [
+      "frames_128/hit_00.png",
+      "frames_128/hit_01.png",
+      "frames_128/hit_02.png",
+      "frames_128/hit_03.png",
+      "frames_128/hit_04.png",
+      "frames_128/hit_05.png"
+    ]
+  },
+  "notes": "Prototype AI sprite sheet. Frames normalized for quick Godot visual testing; manual cleanup recommended."
+}

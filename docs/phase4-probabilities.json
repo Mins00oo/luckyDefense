@@ -1,0 +1,79 @@
+{
+	"draws": 1000000,
+	"exact_ticket_counts": {
+		"COMMON": 6000,
+		"EPIC": 350,
+		"LEGENDARY": 50,
+		"RARE": 1000,
+		"UNCOMMON": 2600
+	},
+	"failures": 0,
+	"grade_counts": {
+		"COMMON": 599496,
+		"EPIC": 35027,
+		"LEGENDARY": 4994,
+		"RARE": 100297,
+		"UNCOMMON": 260186
+	},
+	"joint_counts": {
+		"artillery": {
+			"COMMON": 120009,
+			"EPIC": 7028,
+			"LEGENDARY": 1011,
+			"RARE": 20203,
+			"UNCOMMON": 52102
+		},
+		"assault": {
+			"COMMON": 120038,
+			"EPIC": 7044,
+			"LEGENDARY": 1053,
+			"RARE": 19801,
+			"UNCOMMON": 52300
+		},
+		"disruptor": {
+			"COMMON": 29797,
+			"EPIC": 1736,
+			"LEGENDARY": 244,
+			"RARE": 4962,
+			"UNCOMMON": 13134
+		},
+		"incinerator": {
+			"COMMON": 59985,
+			"EPIC": 3604,
+			"LEGENDARY": 488,
+			"RARE": 10174,
+			"UNCOMMON": 25880
+		},
+		"marksman": {
+			"COMMON": 59929,
+			"EPIC": 3479,
+			"LEGENDARY": 484,
+			"RARE": 10128,
+			"UNCOMMON": 26257
+		},
+		"pierce": {
+			"COMMON": 89586,
+			"EPIC": 5157,
+			"LEGENDARY": 719,
+			"RARE": 15082,
+			"UNCOMMON": 38814
+		},
+		"rapid": {
+			"COMMON": 120152,
+			"EPIC": 6979,
+			"LEGENDARY": 995,
+			"RARE": 19947,
+			"UNCOMMON": 51699
+		}
+	},
+	"seed": 20261120,
+	"type_counts": {
+		"artillery": 200353,
+		"assault": 200236,
+		"disruptor": 49873,
+		"incinerator": 100131,
+		"marksman": 100277,
+		"pierce": 149358,
+		"rapid": 199772
+	}
+}

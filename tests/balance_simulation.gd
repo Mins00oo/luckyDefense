@@ -32,32 +32,43 @@ func run() -> void:
 	# give a freshly spawned enemy an extra automatic physics update.
 	s.actors.process_mode = Node.PROCESS_MODE_DISABLED
 	var full_catalog: UnitCatalog = s.catalog
+	var full_grades: GradeCatalog = s.grade_catalog
 	var reports: Dictionary = {}
 	for cohort in cohorts:
 		var outcomes: Array[Dictionary] = []
 		# No-growth cohorts have no random choices after their forced opening.
-		var cohort_runs: int = 1 if cohort.ends_with("no_growth") else runs
+		var solo: bool = cohort.begins_with("legendary_solo_")
+		var cohort_runs: int = 1 if cohort.ends_with("no_growth") or solo else runs
 		for seed_value in range(1, cohort_runs + 1):
 			s.restart_game()
 			s.rng.seed = seed_value
-			for initial in 2:
+			for initial in (1 if solo else 2):
 				if cohort != "random":
 					var forced := UnitCatalog.new()
-					forced.units.append(full_catalog.units[0 if cohort.begins_with("weak") else initial + 1])
+					var type_index: int = 3 if cohort.begins_with("weak") else initial + 1
+					if solo:
+						for index in full_catalog.units.size():
+							if full_catalog.units[index].id == cohort.trim_prefix("legendary_solo_"):
+								type_index = index
+					forced.units.append(full_catalog.units[type_index])
 					s.catalog = forced
+					var forced_grades := GradeCatalog.new()
+					forced_grades.grades.append(full_grades.grades[4 if solo else 0])
+					s.grade_catalog = forced_grades
 				s.summon(PLACEMENT[initial])
 			s.catalog = full_catalog
+			s.grade_catalog = full_grades
 			var composition: Array[String] = []
 			for tower in s.towers:
-				composition.append(tower.definition.id)
+				composition.append(tower.definition.id + "/" + tower.grade.id)
 			var samples: Dictionary = {}
 			for tick in 18000:
-				if s.gold >= s.SUMMON_COST and s.towers.size() < 24 and not cohort.ends_with("no_growth"):
+				if s.gold >= s.SUMMON_COST and s.towers.size() < 24 and not cohort.ends_with("no_growth") and not solo:
 					s.summon(PLACEMENT[s.towers.size()])
 				var prior_wave: int = s.wave
 				var prior_gold: int = s.gold
 				var prior_count: int = s.enemies.size()
-				for enemy in s.enemies:
+				for enemy in s.enemies.duplicate():
 					enemy.advance(STEP)
 				s._physics_process(STEP)
 				if s.wave != prior_wave and prior_wave > 0:
@@ -79,10 +90,10 @@ func run() -> void:
 		reports[cohort] = summarize(outcomes)
 		print("COHORT ", cohort, ": ", JSON.stringify(reports[cohort].summary))
 	var result: Dictionary = {"runs_per_randomized_cohort": runs, "seed_first": 1, "seed_last": runs, "max_wave": max_wave, "physics_hz": 60, "policy": "Spend whenever gold >= 50; fixed 24-slot order; no sales or moves. Forced cohorts only change first two draws, subsequent RNG sequence is paired.", "sample_definition": "At end of each wave before survival supply, or at defeat (60 alive); conditional on reaching that wave.", "seconds": (Time.get_ticks_msec() - started) / 1000.0, "cohorts": reports}
-	var file := FileAccess.open("res://docs/balance-results.json", FileAccess.WRITE)
+	var file := FileAccess.open("res://docs/phase4-balance-results.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(result, "\t"))
 	file.close()
-	print("BALANCE SAVED: docs/balance-results.json / ", result.seconds, " seconds")
+	print("BALANCE SAVED: docs/phase4-balance-results.json / ", result.seconds, " seconds")
 	game.queue_free()
 	await process_frame
 	quit()

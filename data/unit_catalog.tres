@@ -1,11 +1,15 @@
-[gd_resource type="Resource" script_class="UnitCatalog" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="UnitCatalog" load_steps=10 format=3 uid="uid://ckogplwrqv3fj"]
 
-[ext_resource type="Script" path="res://scripts/data/unit_catalog.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="2"]
-[ext_resource type="Resource" path="res://data/units/rapid.tres" id="3"]
-[ext_resource type="Resource" path="res://data/units/artillery.tres" id="4"]
-[ext_resource type="Resource" path="res://data/units/pierce.tres" id="5"]
+[ext_resource type="Script" uid="uid://btgpcyrjjdccb" path="res://scripts/data/unit_catalog.gd" id="1"]
+[ext_resource type="Script" uid="uid://w48eymbvgbfr" path="res://scripts/data/unit_definition.gd" id="2"]
+[ext_resource type="Resource" uid="uid://0gp6p6d5vaem" path="res://data/units/rapid.tres" id="3"]
+[ext_resource type="Resource" uid="uid://cy8jmjdjj07cg" path="res://data/units/artillery.tres" id="4"]
+[ext_resource type="Resource" uid="uid://bff7pvew3blk8" path="res://data/units/pierce.tres" id="5"]
+[ext_resource type="Resource" path="res://data/units/assault.tres" id="6"]
+[ext_resource type="Resource" path="res://data/units/marksman.tres" id="7"]
+[ext_resource type="Resource" path="res://data/units/incinerator.tres" id="8"]
+[ext_resource type="Resource" path="res://data/units/disruptor.tres" id="9"]
 
 [resource]
 script = ExtResource("1")
-units = Array[ExtResource("2")]([ExtResource("3"), ExtResource("4"), ExtResource("5")])
+units = Array[ExtResource("2")]([ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9")])

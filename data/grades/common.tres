@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitGrade" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_grade.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = "COMMON"
+display_name = "일반"
+rank = 0
+weight = 6000
+color = Color(0.58,0.62,0.64,1)
+damage_multiplier = 1.0
+interval_multiplier = 1.0
+range_multiplier = 1.0
+special_multiplier = 1.0
+armor_penetration = 0.0
+extra_targets = 0

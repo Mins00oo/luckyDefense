@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UnitGrade" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_grade.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = "RARE"
+display_name = "희귀"
+rank = 2
+weight = 1000
+color = Color(0.35,0.62,0.90,1)
+damage_multiplier = 1.4
+interval_multiplier = 0.94
+range_multiplier = 1.06
+special_multiplier = 1.22
+armor_penetration = 0.75
+extra_targets = 1

@@ -3,6 +3,8 @@ extends Node
 
 signal changed
 signal notice(message: String)
+signal summoned(tower: Tower)
+signal restarted
 
 enum State { PREPARATION, COMBAT, PAUSED, GAME_OVER }
 const STARTING_GOLD: int = 100
@@ -14,6 +16,7 @@ const WAVE_DURATION: float = 18.0
 const ENEMY_SCENE: PackedScene = preload("res://scenes/enemy.tscn")
 const TOWER_SCENE: PackedScene = preload("res://scenes/tower.tscn")
 @export var catalog: UnitCatalog
+@export var grade_catalog: GradeCatalog = preload("res://data/grade_catalog.tres")
 @export var wave_director: WaveDirector = preload("res://data/waves.tres")
 @onready var board: Battlefield = $"../Board"
 @onready var actors: Node2D = $"../Actors"
@@ -108,20 +111,22 @@ func summon(requested_slot: int = -1) -> bool:
 		notice.emit("골드 부족 — 적을 처치하면 보급됩니다.")
 		return false
 	var definition: UnitDefinition = catalog.roll(rng)
-	if definition == null:
+	var rarity: UnitGrade = grade_catalog.roll(rng)
+	if definition == null or rarity == null:
 		notice.emit("소환 목록의 가중치를 확인하세요.")
 		return false
 	var tower: Tower = TOWER_SCENE.instantiate()
 	actors.add_child(tower)
 	tower.position = board.slot_position(index)
-	tower.setup(definition, index)
+	tower.setup(definition, index, rarity)
 	towers.append(tower)
 	board.occupied[index] = tower
 	clear_selection()
 	board.selected_slot = index
 	board.queue_redraw()
 	gold -= SUMMON_COST
-	notice.emit("배치 완료: %s  /  %s" % [definition.display_name, definition.grade])
+	notice.emit("증원: %s / %s" % [definition.display_name, rarity.display_name])
+	summoned.emit(tower)
 	changed.emit()
 	return true
 
@@ -155,6 +160,7 @@ func restart_game() -> void:
 	preparation_remaining = PREPARATION_DURATION
 	state = State.PREPARATION
 	resume_state = State.PREPARATION
+	restarted.emit()
 	notice.emit("작전 준비 — 10초 후 적이 진입합니다. 유닛을 배치하세요.")
 	changed.emit()
 
@@ -185,7 +191,7 @@ func handle_slot(index: int) -> void:
 		board.selected_slot = index
 		if selected_tower:
 			selected_tower.set_selected(true)
-			board.selected_range = selected_tower.definition.attack_range
+			board.selected_range = selected_tower.reach()
 		board.queue_redraw()
 		changed.emit()
 

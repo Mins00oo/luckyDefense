@@ -1,19 +1,27 @@
-[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3 uid="uid://cy8jmjdjj07cg"]
 
-[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="Script" uid="uid://w48eymbvgbfr" path="res://scripts/data/unit_definition.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
 
 [resource]
 script = ExtResource("1")
 id = "artillery"
 display_name = "시즈 / SIEGE"
-grade = "SPECIALIST"
-description = "포격형 · 착탄 지점 주변 범위 피해"
-weight = 30.0
+category = "차량형"
+description = "착탄 반경 내 광역 포격."
+weight = 20.0
 attack_kind = 1
 damage = 42.0
 attack_interval = 1.35
 attack_range = 380.0
 splash_radius = 70.0
+beam_width = 16.0
+armor_penetration = 0.0
+burn_dps = 12.0
+burn_duration = 1.2
+cone_half_angle = 0.65
+max_targets = 5
+slow_strength = 0.25
+slow_duration = 1.5
 accent = Color(0.86, 0.64, 0.37, 1)
 visual_scene = ExtResource("2")

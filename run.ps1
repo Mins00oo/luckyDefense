@@ -1,4 +1,4 @@
-param([switch]$Editor, [switch]$Test, [switch]$WindowsTest, [switch]$Balance)
+param([switch]$Editor, [switch]$Test, [switch]$WindowsTest, [switch]$Balance, [switch]$AssaultPreview)
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 $engine = Join-Path $PSScriptRoot '.tools/Godot_v4.4.1-stable_win64_console.exe'
@@ -12,7 +12,10 @@ $env:APPDATA = Join-Path $PSScriptRoot '.tools/userdata'
 $env:LOCALAPPDATA = Join-Path $PSScriptRoot '.tools/localdata'
 New-Item -ItemType Directory -Force $env:APPDATA | Out-Null
 New-Item -ItemType Directory -Force $env:LOCALAPPDATA | Out-Null
-if ($Test) {
+if ($AssaultPreview) {
+    & $engine --path $PSScriptRoot --script tests/test_phase45_windows.gd -- --preview
+    exit $LASTEXITCODE
+} elseif ($Test) {
     & $engine --headless --path $PSScriptRoot --editor --import --quit
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     & $engine --headless --path $PSScriptRoot --script tests/test_loop.gd
@@ -23,15 +26,23 @@ if ($Test) {
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     & $engine --headless --path $PSScriptRoot --script tests/test_phase3.gd
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $engine --headless --path $PSScriptRoot --script tests/test_phase4.gd
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $engine --headless --path $PSScriptRoot --script tests/test_fire_rate.gd
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $engine --headless --path $PSScriptRoot --script tests/test_probabilities.gd
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     & $engine --headless --path $PSScriptRoot --fixed-fps 60 --script tests/test_simulation.gd
     exit $LASTEXITCODE
 } elseif ($WindowsTest) {
     & $engine --path $PSScriptRoot --script tests/test_phase2_windows.gd
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     & $engine --path $PSScriptRoot --script tests/test_phase3_windows.gd
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    & $engine --path $PSScriptRoot --script tests/test_phase4_windows.gd
     exit $LASTEXITCODE
 } elseif ($Balance) {
-    & $engine --headless --path $PSScriptRoot --fixed-fps 60 --script tests/balance_simulation.gd -- --runs=100
+    & $engine --headless --path $PSScriptRoot --fixed-fps 60 --script tests/balance_simulation.gd -- --runs=100 --cohorts=random,weak,strong,weak_no_growth,strong_no_growth,legendary_solo_rapid,legendary_solo_artillery,legendary_solo_pierce,legendary_solo_assault,legendary_solo_marksman,legendary_solo_incinerator,legendary_solo_disruptor
     exit $LASTEXITCODE
 } elseif ($Editor) {
     & $engine --path $PSScriptRoot --editor

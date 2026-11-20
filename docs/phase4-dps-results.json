@@ -1,0 +1,86 @@
+[
+	{
+		"armor": 0.0,
+		"measured_dps": 40.0,
+		"nominal_dps": 40.0,
+		"unit": "rapid"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 6.66666666666667,
+		"nominal_dps": 40.0,
+		"unit": "rapid"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 31.5,
+		"nominal_dps": 31.1111111111111,
+		"unit": "artillery"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 27.0,
+		"nominal_dps": 31.1111111111111,
+		"unit": "artillery"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 40.2333333333333,
+		"nominal_dps": 40.0,
+		"unit": "pierce"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 33.1333333333333,
+		"nominal_dps": 40.0,
+		"unit": "pierce"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 34.65,
+		"nominal_dps": 34.6153846153846,
+		"unit": "assault"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 11.55,
+		"nominal_dps": 34.6153846153846,
+		"unit": "assault"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 39.1666666666667,
+		"nominal_dps": 39.1666666666667,
+		"unit": "marksman"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 39.1666666666667,
+		"nominal_dps": 39.1666666666667,
+		"unit": "marksman"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 16.4633361935616,
+		"nominal_dps": 4.44444444444444,
+		"unit": "incinerator"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 8.5473657866319,
+		"nominal_dps": 4.44444444444444,
+		"unit": "incinerator"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 5.91666666666667,
+		"nominal_dps": 5.88235294117647,
+		"unit": "disruptor"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 1.18333333333333,
+		"nominal_dps": 5.88235294117647,
+		"unit": "disruptor"
+	}
+]

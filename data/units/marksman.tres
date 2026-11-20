@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+id = "marksman"
+display_name = "저격병 / MARKSMAN"
+category = "보병형"
+description = "방어력 6 관통. 중장갑 우선 조준."
+weight = 10.0
+attack_kind = 3
+damage = 94.0
+attack_interval = 2.4
+attack_range = 570.0
+splash_radius = 70.0
+beam_width = 16.0
+armor_penetration = 6.0
+accent = Color(0.73,0.79,0.70,1)
+visual_scene = ExtResource("2")

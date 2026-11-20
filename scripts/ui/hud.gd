@@ -28,6 +28,8 @@ var overlay: Panel
 var overlay_title: Label
 var overlay_body: Label
 var font := SystemFont.new()
+var arrival_label: Label
+var arrival_time: float = 0.0
 
 func _ready() -> void:
 	font.font_names = PackedStringArray(["Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans CJK KR", "sans-serif"])
@@ -53,6 +55,7 @@ func _ready() -> void:
 	_panel(Rect2(984, 124, 272, 482))
 	_label("REINFORCEMENTS", Rect2(1002, 139, 240, 28), 20, TEXT)
 	_label("랜덤 증원 / 가중치 기반 소환", Rect2(1002, 172, 240, 24), 13, MUTED)
+	arrival_label = _label("", Rect2(270, 130, 670, 30), 18, TEXT)
 	selection_label = _label("", Rect2(1002, 435, 240, 26), 16, ACCENT)
 	info_label = _label("", Rect2(1002, 468, 232, 78), 13, TEXT)
 	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -84,19 +87,18 @@ func bind_session(game: GameSession, field: Battlefield) -> void:
 	board = field
 	session.changed.connect(refresh)
 	session.notice.connect(func(message: String) -> void: status_label.text = message)
+	session.summoned.connect(_on_summoned)
+	session.restarted.connect(func() -> void: arrival_time = 0.0; arrival_label.text = "")
 	for kind in session.wave_director.enemy_types.size():
 		var enemy_type: EnemyDefinition = session.wave_director.enemy_types[kind]
 		_label(enemy_type.display_name, Rect2(50 + kind * 105, 584, 100, 18), 11, enemy_type.accent)
-	var total: float = 0.0
-	for unit in session.catalog.units:
-		total += maxf(unit.weight, 0.0)
-	for index in session.catalog.units.size():
-		var unit: UnitDefinition = session.catalog.units[index]
-		var y: float = 212 + index * 72
-		catalog_controls.append(_panel(Rect2(1000, y, 240, 62)))
-		catalog_controls.append(_label(unit.display_name, Rect2(1012, y + 4, 172, 25), 16, unit.accent))
-		catalog_controls.append(_label("%d%%" % roundi(unit.weight / total * 100.0), Rect2(1190, y + 5, 48, 24), 14, unit.accent))
-		catalog_controls.append(_label(unit.description.split(" · ")[0] + "  /  " + unit.grade, Rect2(1012, y + 34, 220, 22), 12, MUTED))
+	for index in session.grade_catalog.grades.size():
+		var grade: UnitGrade = session.grade_catalog.grades[index]
+		var y: float = 212 + index * 36
+		catalog_controls.append(_panel(Rect2(1000, y, 240, 31)))
+		catalog_controls.append(_label(grade.display_name + " / " + grade.id, Rect2(1008, y + 3, 182, 24), 13, grade.color))
+		catalog_controls.append(_label("%.1f%%" % (grade.weight * 100.0 / session.grade_catalog.total_weight()), Rect2(1190, y + 3, 50, 24), 13, grade.color))
+	catalog_controls.append(_label("7종 유형 × 5등급 / 독립 추첨", Rect2(1002, 400, 240, 24), 12, MUTED))
 	refresh()
 
 func refresh() -> void:
@@ -123,14 +125,19 @@ func refresh() -> void:
 	for control in catalog_controls:
 		control.visible = not has_unit
 	selection_label.position.y = 212 if has_unit else 435
-	info_label.position.y = 252 if has_unit else 468
-	info_label.size.y = 138 if has_unit else 78
+	info_label.position.y = 246 if has_unit else 468
+	info_label.size.y = 144 if has_unit else 78
+	info_label.add_theme_font_size_override("font_size", 12 if has_unit else 13)
 	selection_label.text = "AUTO DEPLOY / 자동 배치" if selected < 0 else "SLOT %02d / 배치 슬롯" % (selected + 1)
 	info_label.text = "빈 칸 선택 → 소환\n유닛 선택 → 다른 슬롯 이동 / 교환"
 	if has_unit:
-		var data: UnitDefinition = session.selected_tower.definition
+		var tower: Tower = session.selected_tower
+		var data: UnitDefinition = tower.definition
 		selection_label.text = data.display_name
-		info_label.text = "%s  /  SLOT %02d\n공격력  %.0f\n공격속도  %.2f회/초 (%.2fs)\n사거리  %.0f\n\n다른 슬롯 클릭: 이동 / 교환" % [data.grade, selected + 1, data.damage, 1.0 / data.attack_interval, data.attack_interval, data.attack_range]
+		selection_label.add_theme_color_override("font_color", tower.grade.color)
+		info_label.text = "%s / %s\n공격력 %.1f / 공격속도 %.2f회/초\n사거리 %.0f / 방어 관통 %.1f\n%s\n판매 %d G" % [data.category, tower.grade.id, tower.damage(), 1.0 / tower.interval(), tower.reach(), tower.penetration(), _ability(tower), session.SELL_VALUE]
+	else:
+		selection_label.add_theme_color_override("font_color", ACCENT)
 	clear_button.disabled = selected < 0
 	sell_button.visible = has_unit and not confirming
 	sell_button.disabled = not session.can_manage_units()
@@ -157,6 +164,34 @@ func _summon() -> void:
 	if board.occupied.has(target):
 		target = -1
 	session.summon(target)
+
+func _ability(tower: Tower) -> String:
+	var d: UnitDefinition = tower.definition
+	match d.attack_kind:
+		UnitDefinition.AttackKind.ARTILLERY:
+			return "광역 포격 / 반경 %.0f" % (d.splash_radius * tower.special())
+		UnitDefinition.AttackKind.PIERCE:
+			return "직선 관통 / 폭 %.0f" % (d.beam_width * tower.special() * 2.0)
+		UnitDefinition.AttackKind.FLAME:
+			return "원뿔 %d대상 / 연소 %.1f DPS\n지속 %.2fs / 최대 3출처 중첩" % [d.max_targets + tower.grade.extra_targets, d.burn_dps * tower.special(), d.burn_duration * tower.special()]
+		UnitDefinition.AttackKind.SLOW:
+			return "감속 %.0f%% / %.2fs\n가장 강한 효과만, 최대 50%%" % [minf(0.5, d.slow_strength * tower.special()) * 100, minf(3, d.slow_duration * tower.special())]
+		_:
+			return d.description
+
+func _on_summoned(tower: Tower) -> void:
+	if tower.grade.rank >= 2:
+		arrival_label.text = "%s 증원  /  %s" % [tower.grade.id, tower.definition.display_name]
+		arrival_label.add_theme_color_override("font_color", tower.grade.color)
+		arrival_label.add_theme_font_size_override("font_size", 22 if tower.grade.rank == 4 else 18)
+		arrival_time = 3.5 if tower.grade.rank >= 3 else 2.2
+
+func _process(delta: float) -> void:
+	if arrival_time > 0.0:
+		arrival_time = maxf(0.0, arrival_time - delta)
+		arrival_label.modulate.a = minf(arrival_time, 1.0)
+		if arrival_time == 0.0:
+			arrival_label.text = ""
 
 func _clear_selection() -> void:
 	session.clear_selection()

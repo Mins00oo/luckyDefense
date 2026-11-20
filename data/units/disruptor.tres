@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+id = "disruptor"
+display_name = "교란기 / DISRUPTOR"
+category = "공중형"
+description = "1.5초간 25% 감속. 중첩 상한 50%."
+weight = 5.0
+attack_kind = 5
+damage = 5.0
+attack_interval = 0.85
+attack_range = 360.0
+splash_radius = 70.0
+beam_width = 16.0
+armor_penetration = 0.0
+accent = Color(0.55,0.66,0.88,1)
+visual_scene = ExtResource("2")
