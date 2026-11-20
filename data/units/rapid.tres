@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "rapid"
+display_name = "벌컨 / VULCAN"
+grade = "STANDARD"
+description = "연사형 · 단일 표적을 빠르게 제압"
+weight = 55.0
+attack_kind = 0
+damage = 9.0
+attack_interval = 0.22
+attack_range = 330.0
+accent = Color(0.64, 0.76, 0.60, 1)
+visual_scene = ExtResource("2")

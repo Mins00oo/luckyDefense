@@ -1,0 +1,10 @@
+{
+	"active_enemies": 59,
+	"effects": 13,
+	"frame_p95_ms": 20.66,
+	"physics_max_ms": 1.992,
+	"physics_mean_ms": 1.68331111111111,
+	"sample_frames": 180,
+	"towers": 24,
+	"warmup_seconds": 2
+}

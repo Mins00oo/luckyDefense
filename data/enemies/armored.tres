@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/data/enemy_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_visual.tscn" id="2"]
+[resource]
+script = ExtResource("1")
+id = "armored"
+display_name = "중장갑형"
+base_health = 180.0
+base_speed = 56.0
+armor = 6.0
+reward = 3
+spawn_gap_multiplier = 1.0
+accent = Color(0.69, 0.71, 0.79, 1)
+visual_scale = 1.18
+visual_scene = ExtResource("2")

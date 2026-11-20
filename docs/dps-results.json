@@ -1,0 +1,38 @@
+[
+	{
+		"armor": 0.0,
+		"measured_dps": 38.7,
+		"nominal_dps": 40.9090909090909,
+		"unit": "rapid"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 12.9,
+		"nominal_dps": 40.9090909090909,
+		"unit": "rapid"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 31.5,
+		"nominal_dps": 31.1111111111111,
+		"unit": "artillery"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 27.0,
+		"nominal_dps": 31.1111111111111,
+		"unit": "artillery"
+	},
+	{
+		"armor": 0.0,
+		"measured_dps": 40.2333333333333,
+		"nominal_dps": 40.0,
+		"unit": "pierce"
+	},
+	{
+		"armor": 6.0,
+		"measured_dps": 33.1333333333333,
+		"nominal_dps": 40.0,
+		"unit": "pierce"
+	}
+]

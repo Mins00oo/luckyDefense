@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="UnitDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/unit_definition.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/tower_visual.tscn" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "artillery"
+display_name = "시즈 / SIEGE"
+grade = "SPECIALIST"
+description = "포격형 · 착탄 지점 주변 범위 피해"
+weight = 30.0
+attack_kind = 1
+damage = 42.0
+attack_interval = 1.35
+attack_range = 380.0
+splash_radius = 70.0
+accent = Color(0.86, 0.64, 0.37, 1)
+visual_scene = ExtResource("2")

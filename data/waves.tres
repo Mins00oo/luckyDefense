@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WaveDirector" load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/data/wave_director.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/data/enemy_definition.gd" id="2"]
+[ext_resource type="Resource" path="res://data/enemies/normal.tres" id="3"]
+[ext_resource type="Resource" path="res://data/enemies/runner.tres" id="4"]
+[ext_resource type="Resource" path="res://data/enemies/armored.tres" id="5"]
+[ext_resource type="Resource" path="res://data/enemies/swarm.tres" id="6"]
+[resource]
+script = ExtResource("1")
+enemy_types = Array[ExtResource("2")]([ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6")])
+opening_counts = Array[Vector4i]([Vector4i(12, 0, 0, 0), Vector4i(10, 8, 0, 0), Vector4i(6, 6, 6, 12), Vector4i(8, 8, 8, 20), Vector4i(8, 8, 10, 22)])
+health_growth = 1.13
+speed_growth = 0.018
+wave_reward = 8
